@@ -1,0 +1,20 @@
+#cloud-config
+users:
+  - name: 'root'
+    passwd: '***FILL_ME_IN***' # must be a hash, generate using 'mkpasswd --method=SHA-512 --rounds=4096'
+    lock_passwd: true
+  - name: 'master'
+    lock_passwd: false
+    shell: /bin/bash
+    sudo: 'ALL=(ALL) ALL'
+package_upgrade: true
+packages:
+  - 'docker-compose'
+runcmd:
+  - 'yes $(gpg --gen-random --armor 1 32) | passwd root' # set random root password
+  - 'ufw limit OpenSSH'
+  - 'ufw allow 8545/tcp' # Quorum HTTP-RPC
+  - 'ufw allow 30303/tcp' # Ethereum
+  - 'ufw allow 30303/udp' # Ethereum discovery
+  - 'ufw enable'
+  - 'sudo -u master git clone https://github.com/reinaertvdc/quasyblock.git /home/master/quasyblock'

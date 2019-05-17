@@ -1,0 +1,13 @@
+{
+  "name": "***FILL_ME_IN***",
+  "region": "ams3",
+  "size": "s-1vcpu-1gb",
+  "image": "ubuntu-18-04-x64",
+  "backups": "true",
+  "ipv6": "true",
+  "private-networking": true,
+  "monitoring": true,
+  "tags": [
+    "quasyblock"
+  ]
+}
