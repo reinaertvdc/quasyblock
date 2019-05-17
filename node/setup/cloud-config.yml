@@ -1,9 +1,9 @@
 #cloud-config
 users:
   - name: 'root'
-    passwd: '***FILL_ME_IN***' # must be a hash, generate using 'mkpasswd --method=SHA-512 --rounds=4096'
     lock_passwd: true
   - name: 'master'
+    passwd: '***FILL_ME_IN***' # must be a hash, generate using 'mkpasswd --method=SHA-512 --rounds=4096'
     lock_passwd: false
     shell: /bin/bash
     sudo: 'ALL=(ALL) ALL'
