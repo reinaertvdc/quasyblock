@@ -1,0 +1,30 @@
+version: '3.7'
+services:
+  quorum:
+    build: 'services/quorum'
+    container_name: 'quorum'
+    depends_on:
+      - 'tessera'
+    healthcheck:
+      interval: '3s'
+      retries: 10
+      start_period: '5s'
+      test: ['CMD', 'wget', '--spider', '--proxy', 'off', 'http://localhost:8545']
+      timeout: '3s'
+    labels:
+      com.quorum.consensus: 'istanbul'
+    ports:
+      - '8545:8545/tcp' # HTTP-RPC
+      - '30303:30303/tcp' # Ethereum
+      - '30303:30303/udp' # Ethereum discovery
+    restart: 'always'
+  tessera:
+    build: 'services/tessera'
+    container_name: 'tessera'
+    healthcheck:
+      interval: '3s'
+      retries: 20
+      start_period: '5s'
+      test: ['CMD-SHELL', '[ -S /qdata/tm/tm.ipc ] || exit 1']
+      timeout: '3s'
+    restart: 'always'
